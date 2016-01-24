@@ -24,7 +24,7 @@ git add remote resin <username>@git.resin.io:<username>/<app-name>.git
 ```
 git push resin master
 ```
-- Sent an email with photo attachement/s to the specified email address 
+- Send an email with photo attachement/s to the specified email address 
 
 ## Current limitations
 - [ ] Assumes the use of google mail
