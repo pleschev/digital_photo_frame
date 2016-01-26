@@ -29,7 +29,6 @@ git push resin master
 ## Current limitations
 - [ ] Assumes the use of google mail
 - [ ] Trusts all emails sent to the specified email address (you might want to make the email address non-obvious)
-- [ ] An ugly error message is displayed on the screen when there are no photos to show
 - [ ] Images are never expired
 
 ## Future improvements
