@@ -10,7 +10,7 @@ lcd_resolution = ENV['LCD_RESOLUTION']
 images_location = '/data'
 seconds_on_each_photo = 5
 
-fbi_command = "fbi -noverbose -vt 2 -timeout #{seconds_on_each_photo} -random --blend 200 -m #{lcd_resolution} --autozoom -device /dev/fb0 -once #{images_location}/*"
+fbi_command = "fbi -noverbose -vt 2 -timeout #{seconds_on_each_photo} -random --blend 200 -m #{lcd_resolution} --autozoom -device /dev/fb0 -once "
 
 puts "Photo gallery started"
 
@@ -25,10 +25,30 @@ end
 Thread.new do
 	loop { 
 		begin
-			#TODO: If there are no images, display instructions on how to send photos to be displayed
+			images_to_show = "#{images_location}/*"
+			if Dir[images_to_show].empty?
+				puts "No images to show, will show email address to send messages to"
 
-			puts "Executing fbi command [#{fbi_command}]"
-			system(fbi_command)
+				if !File.exist?('/tmp/black.png')
+					system("convert -size #{lcd_resolution} xc:'#000000' /tmp/black.png")
+				end
+
+				images_to_show = '/tmp/message.png'
+				if !File.exist?(images_to_show)
+					image = MiniMagick::Image.open('/tmp/black.png')
+					image.combine_options do |c|
+						c.size lcd_resolution
+					    c.gravity 'Center'
+					    c.fill 'white'
+					    c.pointsize '48'
+					    c.annotate '0', "To display your photos,\nsend them as email attachments to\n#{imap_user_name}"	
+					end
+					image.write(images_to_show)
+				end
+			end
+
+			puts "Executing fbi command [#{fbi_command} #{images_to_show}]"
+			system("#{fbi_command} #{images_to_show}")
 			
 			puts "Waiting for all fbi processes to finish"
 			#Can't wait on pid, as fbi spawns subprocesses
