@@ -12,6 +12,9 @@ seconds_on_each_photo = 5
 
 fbi_command = "fbi -noverbose -vt 2 -timeout #{seconds_on_each_photo} -random --blend 200 -m #{lcd_resolution} --autozoom -device /dev/fb0 -once "
 
+#Blank the login screen (so we don't see the console between invocations of fbi)
+system('clear > /dev/tty1')
+
 puts "Photo gallery started"
 
 Mail.defaults do
