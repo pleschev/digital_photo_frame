@@ -8,9 +8,9 @@ imap_password = ENV['IMAP_PASSWORD']
 lcd_resolution = ENV['LCD_RESOLUTION']
 
 images_location = '/data'
-seconds_on_each_photos = 5
+seconds_on_each_photo = 5
 
-fbi_command = "fbi -noverbose -vt 2 -timeout #{seconds_on_each_photos} -random --blend 200 -m #{lcd_resolution} --autozoom -device /dev/fb0 -once #{images_location}/*"
+fbi_command = "fbi -noverbose -vt 2 -timeout #{seconds_on_each_photo} -random --blend 200 -m #{lcd_resolution} --autozoom -device /dev/fb0 -once #{images_location}/*"
 
 puts "Photo gallery started"
 
